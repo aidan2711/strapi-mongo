@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "match_types",
+  "info": {
+    "name": "MatchType"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Match": {
+      "type": "string"
+    },
+    "Hotmatch": {
+      "via": "match_type",
+      "collection": "hotmatch"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "tasks",
+  "collectionName": "posts",
   "info": {
-    "name": "Task",
+    "name": "Post",
     "description": ""
   },
   "options": {
@@ -15,16 +15,8 @@
     "title": {
       "type": "string"
     },
-    "content": {
-      "type": "richtext"
-    },
-    "completed": {
-      "type": "boolean",
-      "default": false
-    },
-    "user": {
-      "plugin": "users-permissions",
-      "model": "user"
+    "body": {
+      "type": "text"
     }
   }
 }

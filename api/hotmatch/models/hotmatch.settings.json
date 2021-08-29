@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hotmatches",
+  "info": {
+    "name": "Hotmatch",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Home": {
+      "type": "string"
+    },
+    "HomeFlag": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "Guest": {
+      "type": "string"
+    },
+    "GuestFlag": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "MatchID": {
+      "type": "string"
+    },
+    "LeagueID": {
+      "type": "string"
+    },
+    "Tournament": {
+      "type": "string"
+    },
+    "TournamentDisplay": {
+      "type": "string"
+    },
+    "Time": {
+      "type": "string"
+    },
+    "Position": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string",
+      "regex": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)"
+    },
+    "match_type": {
+      "via": "Hotmatch",
+      "model": "match-type"
+    }
+  }
+}
