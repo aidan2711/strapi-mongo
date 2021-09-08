@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "teams",
+  "info": {
+    "name": "team",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fixture_id": {
+      "type": "biginteger"
+    },
+    "home": {
+      "model": "fixture-team"
+    },
+    "away": {
+      "model": "fixture-team"
+    }
+  }
+}

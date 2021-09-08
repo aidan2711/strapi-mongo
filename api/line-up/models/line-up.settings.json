@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "line_up",
+  "info": {
+    "name": "lineUp",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fixture_id": {
+      "type": "integer",
+      "unique": false
+    },
+    "team_id": {
+      "type": "integer"
+    },
+    "formation": {
+      "type": "string"
+    },
+    "team": {
+      "model": "team-info"
+    },
+    "coach": {
+      "model": "coach"
+    },
+    "startXI": {
+      "collection": "player"
+    },
+    "substitutes": {
+      "collection": "player"
+    }
+  }
+}

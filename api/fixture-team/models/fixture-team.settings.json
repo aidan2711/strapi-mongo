@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fixture_team",
+  "info": {
+    "name": "fixtureTeam"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "team_id": {
+      "type": "integer",
+      "unique": true,
+      "private": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "string"
+    },
+    "winner": {
+      "type": "boolean"
+    }
+  }
+}

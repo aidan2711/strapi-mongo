@@ -12,6 +12,8 @@
   "devDependencies": {},
   "dependencies": {
     "axios": "^0.21.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "strapi": "3.6.7",
     "strapi-admin": "3.6.7",
     "strapi-connector-mongoose": "3.6.7",

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/fixture-teams",
+      "handler": "fixture-team.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fixture-teams/count",
+      "handler": "fixture-team.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fixture-teams/:id",
+      "handler": "fixture-team.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/fixture-teams",
+      "handler": "fixture-team.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/fixture-teams/:id",
+      "handler": "fixture-team.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/fixture-teams/:id",
+      "handler": "fixture-team.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

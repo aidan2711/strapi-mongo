@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_info",
+  "info": {
+    "name": "teamInfo"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "team_id": {
+      "type": "integer",
+      "unique": true,
+      "private": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "string"
+    },
+    "colors": {
+      "type": "string"
+    }
+  }
+}

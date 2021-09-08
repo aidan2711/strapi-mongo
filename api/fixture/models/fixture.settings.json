@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fixtures",
+  "info": {
+    "name": "fixture",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": false,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fixture_id": {
+      "type": "biginteger"
+    },
+    "referee": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "biginteger"
+    },
+    "venue": {
+      "model": "venue"
+    },
+    "league": {
+      "model": "league"
+    }
+  }
+}

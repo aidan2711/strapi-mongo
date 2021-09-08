@@ -25,7 +25,6 @@ module.exports = {
   create: async (ctx) => {
     // Add your own logic here.
     const post = ctx.request.body;
-    console.log(post);
     const result = await strapi.services.post.create(post);
     // Send 200 `ok`
     ctx.send({

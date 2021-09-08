@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coaches",
+  "info": {
+    "name": "coach",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "coach_id": {
+      "type": "integer",
+      "private": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    }
+  }
+}

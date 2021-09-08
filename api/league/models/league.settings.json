@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leagues",
+  "info": {
+    "name": "league",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "league_id": {
+      "type": "integer",
+      "required": false,
+      "unique": true,
+      "private": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "season": {
+      "type": "biginteger"
+    },
+    "country": {
+      "type": "string"
+    },
+    "round": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "string"
+    },
+    "flag": {
+      "type": "string"
+    }
+  }
+}
