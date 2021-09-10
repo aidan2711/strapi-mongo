@@ -10,6 +10,14 @@
     },
     {
       "method": "GET",
+      "path": "/leagues/sync-data",
+      "handler": "league.sync",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/leagues/count",
       "handler": "league.count",
       "config": {

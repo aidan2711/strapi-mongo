@@ -38,46 +38,9 @@ module.exports = {
 
       const data = response.data.response;
 
-      const leagues = removeDuplicate(data.map(({ league }) => league));
-      await Promise.all(
-        leagues.map(async (item) => {
-          const league = await strapi.services.league.findOne({
-            league_id: item.id,
-          });
-
-          if (!league) {
-            await strapi.services.league.create({
-              league_id: item.id,
-              name: item.name,
-              country: item.country,
-              logo: item.logo,
-              flag: item.flag,
-              season: item.season,
-              round: item.round,
-            });
-          } else {
-            await strapi.services.league.update(
-              { league_id: item.id },
-              {
-                name: item.name,
-                country: item.country,
-                logo: item.logo,
-                flag: item.flag,
-                season: item.season,
-                round: item.round,
-              }
-            );
-          }
-        })
-      );
-
       await Promise.all(
         data.map(async ({ fixture, teams, league }) => {
           const fixtureExist = await strapi.services.fixture.findOne({
-            fixture_id: fixture.id,
-          });
-
-          const teamsExist = await strapi.services.team.findOne({
             fixture_id: fixture.id,
           });
 
@@ -97,6 +60,45 @@ module.exports = {
                 city: fixture.venue.city,
               });
             }
+          }
+
+          let teamsExist = await strapi.services.team.findOne({
+            fixture_id: fixture.id,
+          });
+          if (!teamsExist) {
+            let home = await strapi.services["fixture-team"].findOne({
+              team_id: teams.home.id,
+            });
+            if (!home) {
+              home = await strapi.services["fixture-team"].create({
+                team_id: teams.home.id,
+                name: teams.home.name,
+                logo: teams.home.logo,
+                winner: teams.home.winner,
+              });
+            }
+
+            let away = await strapi.services["fixture-team"].findOne({
+              team_id: teams.away.id,
+            });
+            if (!away) {
+              away = await strapi.services["fixture-team"].create({
+                team_id: teams.away.id,
+                name: teams.away.name,
+                logo: teams.away.logo,
+                winner: teams.away.winner,
+              });
+            }
+
+            teamsExist = await strapi.services.team.create({
+              fixture_id: fixture.id,
+              home: sanitizeEntity(home, {
+                model: strapi.models["fixture-team"],
+              }),
+              away: sanitizeEntity(away, {
+                model: strapi.models["fixture-team"],
+              }),
+            });
           }
 
           if (!fixtureExist) {
@@ -124,42 +126,6 @@ module.exports = {
               }
             );
           }
-
-          if (!teamsExist) {
-            let home = await strapi.query("fixture-team").findOne({
-              team_id: teams.home.id,
-            });
-            if (!home) {
-              home = await strapi.query("fixture-team").create({
-                team_id: teams.home.id,
-                name: teams.home.name,
-                logo: teams.home.logo,
-                winner: teams.home.winner,
-              });
-            }
-
-            let away = await strapi.query("fixture-team").findOne({
-              team_id: teams.away.id,
-            });
-            if (!away) {
-              away = await strapi.query("fixture-team").create({
-                team_id: teams.away.id,
-                name: teams.away.name,
-                logo: teams.away.logo,
-                winner: teams.away.winner,
-              });
-            }
-
-            await strapi.services.team.create({
-              fixture_id: fixture.id,
-              home: sanitizeEntity(home, {
-                model: strapi.models["fixture-team"],
-              }),
-              away: sanitizeEntity(away, {
-                model: strapi.models["fixture-team"],
-              }),
-            });
-          }
         })
       );
 
@@ -170,4 +136,111 @@ module.exports = {
       console.log(error);
     }
   },
+
+  // async sync(ctx) {
+  //   const response = await appAxios.get("/fixtures", {
+  //     params: {
+  //       league: "870",
+  //       season: "2021",
+  //     },
+  //   });
+  //   const data = response.data.response;
+
+  //   await Promise.all(
+  //     data.map(async (item) => {
+  //       const { league } = await strapi.services.league.findOne({
+  //         league_id: item.league.id,
+  //       });
+
+  //       const teamResponse = await strapi.services.team.findOne({
+  //         fixture_id: item.fixture.id,
+  //       });
+
+  //       let team;
+  //       if (!teamResponse) {
+  //         const teams = await strapi.services["fixture-team"].findTeams({
+  //           home_id: item.teams.home.id,
+  //           away_id: item.teams.away.id,
+  //         });
+  //         console.log(teams);
+  //         let home = teams.home;
+  //         let away = teams.away;
+
+  //         if (!home) {
+  //           home = await strapi.services["fixture-team"].create({
+  //             team_id: item.teams.home.id,
+  //             name: item.teams.home.name,
+  //             logo: item.teams.home.logo,
+  //             winner: item.teams.home.winner,
+  //           });
+  //         }
+
+  //         if (!away) {
+  //           away = await strapi.services["fixture-team"].create({
+  //             team_id: item.teams.away.id,
+  //             name: item.teams.away.name,
+  //             logo: item.teams.away.logo,
+  //             winner: item.teams.away.winner,
+  //           });
+  //         }
+
+  //         team = await strapi.services.team.create({
+  //           fixture_id: item.fixture.id,
+  //           home: sanitizeEntity(home, {
+  //             model: strapi.models["fixture-team"],
+  //           }),
+  //           away: sanitizeEntity(away, {
+  //             model: strapi.models["fixture-team"],
+  //           }),
+  //         });
+  //       }
+
+  //       let venue;
+  //       if (item.fixture.venue.id !== null) {
+  //         const venueResponse = await strapi.services.venue.findOne({
+  //           venue_id: item.fixture.venue.id,
+  //         });
+  //         if (!venueResponse) {
+  //           venue = await strapi.services.venue.create({
+  //             venue_id: item.fixture.venue.id,
+  //             name: item.fixture.venue.name,
+  //             city: item.fixture.venue.city,
+  //           });
+  //         }
+  //       }
+  //       const fixtureExist = await strapi.services.fixture.findOne({
+  //         fixture_id: item.fixture.id,
+  //       });
+  //       if (!fixtureExist) {
+  //         await strapi.services.fixture.create({
+  //           fixture_id: item.fixture.id,
+  //           referee: item.fixture.referee,
+  //           timezone: item.fixture.timezone,
+  //           date: item.fixture.date,
+  //           timestamp: item.fixture.timestamp,
+  //           venue: sanitizeEntity(venue, {
+  //             model: strapi.models.venue,
+  //           }),
+  //           league: sanitizeEntity(league, {
+  //             model: strapi.models.league,
+  //           }),
+  //         });
+  //       } else {
+  //         await strapi.services.fixture.update(
+  //           { fixture_id: item.fixture.id },
+  //           {
+  //             referee: item.fixture.referee,
+  //             timezone: item.fixture.timezone,
+  //             date: item.fixture.date,
+  //             timestamp: item.fixture.timestamp,
+  //           }
+  //         );
+  //       }
+  //     })
+  //   );
+
+  //   ctx.send({
+  //     message: "sync fixture success",
+  //   });
+  // },
 };

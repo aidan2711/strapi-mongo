@@ -10,6 +10,14 @@
     },
     {
       "method": "GET",
+      "path": "/fixture-teams/teams",
+      "handler": "fixture-team.findTeams",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/fixture-teams/count",
       "handler": "fixture-team.count",
       "config": {

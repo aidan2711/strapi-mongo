@@ -1,8 +1,15 @@
 const { omitFieldData } = require("../../utils/dataUtils");
 
 module.exports = {
-  async findOne(ctx) {
-    let fixtureTeam = await strapi.services["fixture-team"].findOne(ctx.query);
-    return omitFieldData(fixtureTeam);
+  async findTeams(ctx) {
+    console.log("TEST: " + ctx.query);
+    let home = await strapi.services["fixture-team"].findTeams({
+      home_id: ctx.query.home_id,
+      away_id: ctx.query.away_id,
+    });
+    return ctx.send({
+      home: omitFieldData(home),
+      away: omitFieldData(away),
+    });
   },
 };

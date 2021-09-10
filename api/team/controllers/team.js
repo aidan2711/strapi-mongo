@@ -1,8 +1,10 @@
-'use strict';
+const { omitFieldData } = require("../../utils/dataUtils");
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
- * to customize this controller
- */
-
-module.exports = {};
+module.exports = {
+  async findOne(ctx) {
+    let team = await strapi.services.team.findOne(ctx.query);
+    return ctx.send({
+      team: omitFieldData(team),
+    });
+  },
+};

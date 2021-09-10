@@ -13,15 +13,9 @@ module.exports = {
       });
       const data = response.data.response;
       if (data.length !== 0) {
-        const { team, coach, formation, startXI, subtitutes } = data;
-        const { teamInfo } = await strapi.services["team-info"].findOne({
-          team_id: team.id,
-        });
-        const coachResponse = await strapi.services.coach.findOne({
-          coach_id: coach.id,
-        });
+        const { team, coach, formation, startXI, substitutes } = data[0];
 
-        const startFormation = null;
+        let startFormation;
         if (startXI.length !== 0) {
           startFormation = await Promise.all(
             startXI.map(async (data) => {
@@ -38,10 +32,10 @@ module.exports = {
           );
         }
 
-        const sub = null;
-        if (subtitutes.length !== 0) {
+        let sub;
+        if (substitutes.length !== 0) {
           sub = await Promise.all(
-            subtitutes.map(async (data) => {
+            substitutes.map(async (data) => {
               const playerData = data.player;
               const player = await strapi.services.player.create({
                 player_id: playerData.id,
@@ -55,16 +49,43 @@ module.exports = {
           );
         }
 
+        let coachExist = await strapi.services.coach.findOne({
+          coach_id: coach.id,
+        });
+
+        if(!coachExist) {
+          coachExist = await strapi.services.coach.create({
+            coach_id: coach.id,
+            name: coach.name,
+            photo: coach.photo,
+            country: coach.country,
+          });
+        }
+
+       
+        let teamInfo = await strapi.services["team-info"].findOne({
+          team_id: team.id,
+        });
+        
+        if(!teamInfo) {
+          teamInfo = await strapi.services["team-info"].create({
+            team_id: team.id,
+            name: team.name,
+            logo: team.logo,
+            colors: team.colors,
+          });
+        }
+
         lineUp = await strapi.query("line-up").create({
           formation,
           team: teamInfo,
-          coach: coachResponse.coach,
+          coach: coachExist,
           startXI: startFormation,
-          subtitutes: sub,
+          substitutes: sub,
         });
       }
     }
-    if(lineUp) return ctx.send({ data: lineUp });
+    if (lineUp) return ctx.send({ data: lineUp });
     else return ctx.send({ message: "line up is not set yet" });
   },
 };

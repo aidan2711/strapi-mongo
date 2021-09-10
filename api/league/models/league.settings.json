@@ -35,6 +35,13 @@
     },
     "flag": {
       "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "League",
+        "Cup"
+      ]
     }
   }
 }

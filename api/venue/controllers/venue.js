@@ -1,8 +1,9 @@
-'use strict';
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
- * to customize this controller
- */
-
-module.exports = {};
+module.exports = {
+  async findOne(ctx) {
+    let venue = await strapi.services.venue.findOne(ctx.query);
+    return ctx.send({
+        venue: omitFieldData(venue),
+    });
+  },
+};

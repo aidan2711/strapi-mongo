@@ -651,6 +651,13 @@
               "flag": {
                 "type": "string"
               },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "League",
+                  "Cup"
+                ]
+              },
               "published_at": {
                 "type": "string"
               },
